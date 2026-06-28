@@ -1,0 +1,47 @@
+# Proyecto QUBO-QAOA: Matching Bipartito 4x4 (Mercado Inmobiliario)
+
+## Dataset
+* **Nombre del dataset:** Asignación Óptima de Propiedades Inmobiliarias (Semi-real).
+* **Fuente oficial o confiable:** Perfiles construidos a partir de tendencias de mercado inmobiliario en Baja California (SNIIV / SEDATU) y ofertas públicas de bienes raíces.
+* **Institución responsable:** N/A (Datos semi-reales generados para simulación ética).
+* **URL de la fuente:** Basado en métricas de https://sniiv.sedatu.gob.mx/
+* **URL raw del CSV usado en data/:** *(Aquí pondrás el link raw de tu archivo en github cuando lo subas)*
+* **Licencia o condiciones de uso:** Open Data / Uso Educativo.
+* **Fecha de consulta:** Junio 2026.
+* **Dominio del problema:** Asignación de bienes raíces.
+
+## Modelado
+* **Conjunto A:** 4 perfiles genéricos de compradores con distintas necesidades (Familia, Ejecutivo, Retirados, Inversionista).
+* **Criterio para elegir exactamente 4 elementos de A:** Se seleccionaron los 4 arquetipos de demanda más comunes en la región fronteriza y costera.
+* **Conjunto B:** 4 propiedades disponibles con características contrastantes (Casa grande, Loft, Casa de retiro, Propiedad para remodelar).
+* **Criterio para elegir exactamente 4 elementos de B:** Representan el inventario estancado que una agencia necesita colocar rápidamente.
+* **Definición de x_ij = 1:** El comprador $i$ adquiere la propiedad $j$.
+* **Interpretación de x_ij = 0:** El comprador $i$ NO adquiere la propiedad $j$.
+
+## Matriz de score
+* **Columnas usadas:** `a_nombre`, `b_nombre`, `score`.
+* **Fórmula exacta de S_ij:** El score (del 1 al 10) se calculó ponderando tres factores: Ajuste de Presupuesto (40%), Necesidad de Espacio (30%), y Preferencia Geográfica/Estilo de vida (30%).
+* **Normalización aplicada:** Escala lineal simple de 1 a 10.
+* **Matriz S 4x4:** Evaluada en el código. Los scores más altos están en la diagonal lógica del problema.
+
+## Restricciones
+* **Restricción por filas:** Cada comprador solo puede adquirir exactamente UNA propiedad.
+* **Restricción por columnas:** Cada propiedad solo puede ser vendida a exactamente UN comprador.
+* **Otras restricciones, si existen:** Ninguna.
+* **Justificación de por qué el problema es matching bipartito:** Existen dos conjuntos disjuntos (Compradores y Propiedades) y buscamos emparejarlos 1 a 1 maximizando la satisfacción global (el score).
+* **Justificación de por qué es razonable modelarlo como QUBO:** Las restricciones de exclusividad mutua se pueden traducir perfectamente a penalizaciones cuadráticas, forzando a que las filas y columnas sumen 1.
+
+## Resultados
+* **Solución clásica exacta:** *(Cópialo aquí cuando corras la celda 21)*
+* **Resultado QAOA local:** *(Cópialo aquí cuando corras la celda 30)*
+* **Comparación clásico vs QAOA local:** *(Cópialo aquí observando si QAOA logró encontrar el score óptimo)*
+* **Si se usó hardware real o pipeline híbrido:** N/A (Se usó simulación local ligera).
+
+## Ética y limitaciones
+* **Riesgos éticos:** Riesgo de sesgo si se usaran historiales crediticios reales o datos personales identificables, violando la privacidad de clientes.
+* **Medidas de mitigación:** Se utilizaron "arquetipos" de compradores genéricos en lugar de individuos reales. No hay datos financieros sensibles.
+* **Limitaciones del modelo:** En la vida real, un inversionista podría querer comprar múltiples propiedades, o una propiedad podría no venderse a nadie si los scores son muy bajos.
+
+## Ejecución
+* **Instrucciones para abrir el archivo .ipynb en Google Colab:** Subir el notebook directamente a Colab o usar el enlace directo de integración de GitHub en Colab.
+* **Instrucciones para ejecutar todas las celdas sin errores:** Presionar `Runtime -> Run all`. El notebook está configurado para leer automáticamente el archivo de la carpeta `/data` y evitar la instancia molecular de ejemplo.
