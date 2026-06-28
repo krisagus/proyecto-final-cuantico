@@ -1,0 +1,17 @@
+a_id,b_id,score,a_nombre,b_nombre
+A1,B1,9.5,Familia Grande,Casa 4 Rec (Ensenada)
+A1,B2,2.0,Familia Grande,Loft Céntrico (Tijuana)
+A1,B3,6.0,Familia Grande,Casa 1 Piso (Costa)
+A1,B4,4.0,Familia Grande,Propiedad a Remodelar
+A2,B1,3.0,Ejecutivo Soltero,Casa 4 Rec (Ensenada)
+A2,B2,9.0,Ejecutivo Soltero,Loft Céntrico (Tijuana)
+A2,B3,4.0,Ejecutivo Soltero,Casa 1 Piso (Costa)
+A2,B4,5.0,Ejecutivo Soltero,Propiedad a Remodelar
+A3,B1,5.0,Pareja Retirados,Casa 4 Rec (Ensenada)
+A3,B2,2.0,Pareja Retirados,Loft Céntrico (Tijuana)
+A3,B3,9.8,Pareja Retirados,Casa 1 Piso (Costa)
+A3,B4,1.0,Pareja Retirados,Propiedad a Remodelar
+A4,B1,4.0,Inversionista,Casa 4 Rec (Ensenada)
+A4,B2,6.0,Inversionista,Loft Céntrico (Tijuana)
+A4,B3,3.0,Inversionista,Casa 1 Piso (Costa)
+A4,B4,9.2,Inversionista,Propiedad a Remodelar
