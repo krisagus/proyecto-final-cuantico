@@ -37,18 +37,41 @@
 * **Comparación clásico vs QAOA local:** El algoritmo QAOA logró resolver el problema de asignación inmobiliaria con éxito rotundo al encontrar el óptimo global. Aunque la probabilidad de medir el estado óptimo exacto es del 0.10% (0.001014), este resultado es un éxito teórico rotundo: al modelar una matriz de 4x4, el espacio de búsqueda abarca 16 qubits ($2^{16} = 65,536$ estados posibles). Una búsqueda puramente aleatoria tendría una probabilidad de apenas $\approx 0.0015\%$; por lo tanto, el circuito QAOA con solo $p=1$ logró amplificar de forma masiva la probabilidad de éxito. La probabilidad acumulada de obtener cualquier solución válida (factible) fue del 2.25% (0.022534).
 * **Si se usó hardware real o pipeline híbrido:** N/A (Se usó simulación local ligera).
 
-**Interpretación mínima del resultado**
-**¿Cuál fue la mejor asignación encontrada?**La mejor relacion biunívoca ó uno a uno a cada elemento del Grupo A con el Grupo B sin conflictos de solapamiento. Siguiendo los índices del problema de bienes raíces, la configuración óptima empareja directamente a los elementos correspondientes: A1-B1, A2-B2, A3-B3 y A4-B4.
-**¿Cuál fue su score en el dominio?**El score máximo en el dominio de la función de aptitud fue de 37.5 (equivalente a una energía QUBO exacta de -37.5).
-**¿La asignación cumple todas las restricciones?**Sí. El modelo arrojó un estado de factibilidad igual a True. Esto significa que las penalizaciones cuadráticas añadidas al QUBO funcionaron correctamente, forzando al sistema a respetar la exclusividad mutua (cada comprador recibe exactamente una propiedad y ninguna propiedad es asignada dos veces).
-**¿QAOA local observó el óptimo clásico?**Sí. Al analizar las muestras individuales recolectadas por el algoritmo, la mejor muestra del QAOA local registró una energía de -37.5 y un score de 37.5, igualando con precisión absoluta la solución óptima del solucionador clásico exacto.
-**¿Qué tan frecuente fue observar soluciones factibles?**La probabilidad de medir una solución que fuera matemáticamente válida (factible) fue del 2.25% (0.022534), mientras que la probabilidad específica de observar el óptimo global absoluto fue del 0.10% (0.001014). Aunque estos porcentajes parecen bajos en términos absolutos, representan una amplificación masiva frente a una búsqueda aleatoria pura en un espacio de Hilbert de 16 qubits ($2^{16} = 65,536$ combinaciones posibles).
-**¿Qué limitaciones tiene el modelo?**El modelo opera bajo una profundidad de circuito mínima ($p=1$), lo que limita la capacidad del entrelazamiento cuántico para distribuir mejor las probabilidades hacia el estado base. Asimismo, asume que la matriz de costos y las penalizaciones por violación de restricciones son estáticas y conocidas a priori, ignorando fluctuaciones dinámicas del entorno real.
-**¿Qué cambiaría si el dataset creciera?**Si el dataset creciera (por ejemplo, a una matriz de asignación de 10x10), el número de qubits requeridos aumentaría cuadráticamente ($N^2 = 100$ qubits). El espacio de soluciones explotaría a $2^{100}$ estados, volviendo la simulación clásica exacta matemáticamente inviable. En ese escenario, sería obligatorio migrar a hardware cuántico real, incrementar la profundidad del circuito ($p > 1$) y aplicar técnicas robustas de optimización de parámetros y mitigación de errores (error mitigation).
-**¿Qué riesgos éticos existen y cómo se mitigaron?**Riesgos: La automatización de asignaciones en sectores sensibles como la vivienda puede perpetuar sesgos socioeconómicos si los scores de afinidad discriminan por capacidad adquisitiva o si el algoritmo desplaza comunidades vulnerables (gentrificación algorítmica).Mitigación: El modelo se acota estrictamente a un marco académico y experimental. Los datos utilizados son sintéticos y formulados con fines ilustrativos. Se incluye un descargo de responsabilidad (disclaimer) explícito que prohíbe el uso de este software para la toma de decisiones reales.
-**Si se usó hardware real, ¿cómo compara contra QAOA local?**N/A. Para este proyecto se utilizó exclusivamente simulación local basada en vectores de estado (Statevector).
-**Si se usó reparación clásica, ¿qué parte del resultado corresponde al postprocesamiento híbrido?**N/A. El flujo del algoritmo converge directamente de la optimización del circuito variacional sin requerir un algoritmo complementario de reparación clásica de bits.
-**Nota de Descargo de Responsabilidad (Disclaimer): La salida de este algoritmo QAOA es el resultado de un ejercicio académico de computación cuántica y no debe presentarse, bajo ninguna circunstancia, como una recomendación de vivienda en el mundo real.**
+## Interpretación mínima del resultado
+
+* **¿Cuál fue la mejor asignación encontrada?**
+  La mejor relación de correspondencia exacta (uno a uno) vincula a cada elemento del Grupo A con el Grupo B sin conflictos de solapamiento. Siguiendo los índices del problema de bienes raíces, la configuración óptima empareja directamente a los elementos correspondientes: A1-B1, A2-B2, A3-B3 y A4-B4.
+
+* **¿Cuál fue su score en el dominio?**
+  El score máximo en el dominio de la función de aptitud fue de 37.5 (equivalente a una energía QUBO exacta de -37.5).
+
+* **¿La asignación cumple todas las restricciones?**
+  Sí. El modelo arrojó un estado de factibilidad igual a `True`. Esto significa que las penalizaciones cuadráticas añadidas al QUBO funcionaron correctamente, forzando al sistema a respetar la exclusividad mutua (cada comprador recibe exactamente una propiedad y ninguna propiedad es asignada dos veces).
+
+* **¿QAOA local observó el óptimo clásico?**
+  Sí. Al analizar las muestras individuales recolectadas por el algoritmo, la mejor muestra del QAOA local registró una energía de -37.5 y un score de 37.5, igualando con precisión absoluta la solución óptima del solucionador clásico exacto.
+
+* **¿Qué tan frecuente fue observar soluciones factibles?**
+  La probabilidad de medir una solución que fuera matemáticamente válida (factible) fue del 2.25% (0.022534), mientras que la probabilidad específica de observar el óptimo global absoluto fue del 0.10% (0.001014). Aunque estos porcentajes parecen bajos en términos absolutos, representan una amplificación masiva frente a una búsqueda aleatoria pura en un espacio de Hilbert de 16 qubits ($2^{16} = 65,536$ combinaciones posibles).
+
+* **¿Qué limitaciones tiene el modelo?**
+  El modelo opera bajo una profundidad de circuito mínima ($p=1$), lo que limita la capacidad del entrelazamiento cuántico para distribuir mejor las probabilidades hacia el estado base. Asimismo, asume que la matriz de costos y las penalizaciones por violación de restricciones son estáticas y conocidas a priori, ignorando fluctuaciones dinámicas del entorno real.
+
+* **¿Qué cambiaría si el dataset creciera?**
+  Si el dataset creciera (por ejemplo, a una matriz de asignación de 10x10), el número de qubits requeridos aumentaría cuadráticamente ($N^2 = 100$ qubits). El espacio de soluciones explotaría a $2^{100}$ estados, volviendo la simulación clásica exacta matemáticamente inviable. En ese escenario, sería obligatorio migrar a hardware cuántico real, incrementar la profundidad del circuito ($p > 1$) y aplicar técnicas robustas de optimización de parámetros y mitigación de errores.
+
+* **¿Qué riesgos éticos existen y cómo se mitigaron?**
+  *Riesgos:* La automatización de asignaciones en sectores sensibles como la vivienda puede perpetuar sesgos socioeconómicos si los scores de afinidad discriminan por capacidad adquisitiva o si el algoritmo desplaza comunidades vulnerables. 
+  *Mitigación:* El modelo se acota estrictamente a un marco académico y experimental. Los datos utilizados son sintéticos y formulados con fines ilustrativos. 
+
+* **Si se usó hardware real, ¿cómo compara contra QAOA local?**
+  N/A. Para este proyecto se utilizó exclusivamente simulación local basada en vectores de estado (`Statevector`).
+
+* **Si se usó reparación clásica, ¿qué parte del resultado corresponde al postprocesamiento híbrido?**
+  N/A. El flujo del algoritmo converge directamente de la optimización del circuito variacional sin requerir un algoritmo complementario de reparación clásica de bits.
+
+> **Nota de Descargo de Responsabilidad (Disclaimer):** La salida de este algoritmo QAOA es el resultado de un ejercicio académico de computación cuántica y no debe presentarse, bajo ninguna circunstancia, como una recomendación de vivienda en el mundo real.
+> 
 
 ## Ética y limitaciones
 * **Riesgos éticos:** Riesgo de sesgo si se usaran historiales crediticios reales o datos personales identificables, violando la privacidad de clientes.
