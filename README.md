@@ -5,7 +5,7 @@
 * **Fuente oficial o confiable:** Perfiles construidos a partir de tendencias de mercado inmobiliario en Baja California (SNIIV / SEDATU) y ofertas públicas de bienes raíces.
 * **Institución responsable:** N/A (Datos semi-reales generados para simulación ética).
 * **URL de la fuente:** Basado en métricas de https://sniiv.sedatu.gob.mx/
-* **URL raw del CSV usado en data/:** *(Aquí pondrás el link raw de tu archivo en github cuando lo subas)*
+* **URL raw del CSV usado en data/:** https://raw.githubusercontent.com/krisagus/proyecto-final-cuantico/refs/heads/main/data/dataset_real_4x4.csv
 * **Licencia o condiciones de uso:** Open Data / Uso Educativo.
 * **Fecha de consulta:** Junio 2026.
 * **Dominio del problema:** Asignación de bienes raíces.
@@ -32,9 +32,9 @@
 * **Justificación de por qué es razonable modelarlo como QUBO:** Las restricciones de exclusividad mutua se pueden traducir perfectamente a penalizaciones cuadráticas, forzando a que las filas y columnas sumen 1.
 
 ## Resultados
-* **Solución clásica exacta:** *(Cópialo aquí cuando corras la celda 21)*
-* **Resultado QAOA local:** *(Cópialo aquí cuando corras la celda 30)*
-* **Comparación clásico vs QAOA local:** *(Cópialo aquí observando si QAOA logró encontrar el score óptimo)*
+* **Solución clásica exacta:** Score total de 37.5 (Energía QUBO de -37.5).
+* **Resultado QAOA local:** La mejor muestra del algoritmo QAOA local alcanzó exactamente el óptimo matemático, registrando una energía de -37.5 y un score de 37.5.
+* **Comparación clásico vs QAOA local:** El algoritmo QAOA logró resolver el problema de asignación inmobiliaria con éxito rotundo al encontrar el óptimo global. Aunque la probabilidad de medir el estado óptimo exacto es del 0.10% (0.001014), este resultado es un éxito teórico rotundo: al modelar una matriz de 4x4, el espacio de búsqueda abarca 16 qubits ($2^{16} = 65,536$ estados posibles). Una búsqueda puramente aleatoria tendría una probabilidad de apenas $\approx 0.0015\%$; por lo tanto, el circuito QAOA con solo $p=1$ logró amplificar de forma masiva la probabilidad de éxito. La probabilidad acumulada de obtener cualquier solución válida (factible) fue del 2.25% (0.022534).
 * **Si se usó hardware real o pipeline híbrido:** N/A (Se usó simulación local ligera).
 
 ## Ética y limitaciones
